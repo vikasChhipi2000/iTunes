@@ -77,8 +77,11 @@ class MainActivity : BaseClass() {
         val term = "%${searchEditText.text.toString().trim()}%"
         launch {
             baseContext.let {
+                errorTextView.text = ""
                 val table : List<SongTable> = AppDataBase(it).userDao().loadAllByName(term)
                 dataRecycleView.adapter = DataRecyclerAdapter(table.toTypedArray())
+                if(table.size <= 0)
+                    errorTextView.text = "NO RESULT IN DATABASE"
             }
         }
     }
